@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 18:32:27 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/04 11:06:36 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/04 23:10:30 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	elem_set_flag(const char **str, t_elem *e, va_list *param)
 	while (**str == '0' || **str == '-')
 		(*str)++;
 	elem_set_value(&e->width, str, param);
+	if (e->width < 0)
+	{
+		e->width *= -1;
+		e->align = LEFT;
+	}
 }
 
 void	elem_set_prec(const char **str, t_elem *e, va_list *param)

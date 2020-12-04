@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 09:50:08 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/04 12:34:59 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/04 22:50:24 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ t_elem		elem_init(void);
 char		*elem_print(const char **str, va_list *param);
 t_elem		*elem_create(const char **str, va_list *param);
 int			ft_printf(const char *str, ...);
+char		*nbr_put_align(t_elem *e);
 
 #endif

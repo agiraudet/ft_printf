@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/04 10:43:09 by agiraude          #+#    #+#              #
-#    Updated: 2020/12/04 22:51:56 by agiraude         ###   ########.fr        #
+#    Updated: 2020/12/07 17:44:38 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,11 @@ LIBFT_DIR	=	libft/
 
 LIBFT		=	libft.a
 
+INC_DIR		=	includes/
+
 SRCS_DIR	=	srcs/
 
-SRCS_FILES	=	ft_printf.c ft_elem2.c ft_elem.c ft_elem3.c
+SRCS_FILES	=	ft_elem_buffer.c ft_elem_manage.c ft_elem_set.c ft_elem_utils.c ft_printf.c
 
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
@@ -31,7 +33,7 @@ RM			=	rm -f
 NAME		=	libftprintf.a
 
 .c.o:
-				$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+				$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I $(INC_DIR)
 
 all:			$(NAME)
 

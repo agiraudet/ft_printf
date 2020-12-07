@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:30:49 by agiraude          #+#    #+#             */
-/*   Updated: 2020/11/16 16:59:30 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/06 17:27:23 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char			*ft_strdup(const char *s)
 {
 	char	*ret;
 
+	if (!s)
+		return (0);
 	ret = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!ret)
 		return (0);

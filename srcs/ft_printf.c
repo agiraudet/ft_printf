@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 19:12:01 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/07 15:48:01 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:35:57 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		ft_printf(const char *str, ...)
 {
 	va_list	param;
 	int		nbchar;
-	char	*buffer;
 
 	va_start(param, str);
 	nbchar = 0;
@@ -29,10 +28,7 @@ int		ft_printf(const char *str, ...)
 			continue ;
 		}
 		str++;
-		buffer = elem_print(&str, &param);
-		ft_putstr(buffer);
-		nbchar += ft_strlen(buffer);
-		free(buffer);
+		nbchar += elem_print(&str, &param);
 	}
 	return (nbchar);
 }

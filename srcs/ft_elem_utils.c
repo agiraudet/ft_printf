@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 17:42:31 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/07 18:17:58 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:44:06 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*arg_to_str(t_elem *e, char *arg)
 {
 	if (!arg)
 	{
-		if (e->prec)
+		if (e->prec && e->size <= 5)
 			return (ft_strdup(""));
 		return (ft_strdup("(null)"));
 	}
@@ -40,19 +40,23 @@ char	*arg_to_ptr(long ptr)
 	return (ft_itoa_base(ptr, "0123456789abcdef"));
 }
 
-void	fix_hex(t_elem *e, char	**src)
+char	*fix_hex(char *src)
 {
-	char	*tmp;
+	int		i;
 
-	if (!src)
-		return ;
-	if (e->type == 'p')
+	i = 0;
+	while (src[i] == '0')
+		i++;
+	if (i == 1)
+		return (src);
+	else if (src[i] == 'x')
 	{
-		tmp = *src;
-		*src = ft_strjoin("0x", tmp);
-		free(tmp);
+		src[i] = '0';
+		src[1] = 'x';
 	}
+	return (src);
 }
+
 
 void	fix_minus(char *src)
 {
@@ -66,5 +70,20 @@ void	fix_minus(char *src)
 	{
 		src[i] = '0';
 		src[0] = '-';
+	}
+}
+
+void	elem_put_buffer(t_elem *e, char	*buffer)
+{
+	int		i;
+
+	i = 0;
+	while (buffer[i])
+	{
+		if (e->zeroFlag && buffer[i] == '.')
+			ft_putchar(0);
+		else
+		ft_putchar(buffer[i]);
+		i++;
 	}
 }

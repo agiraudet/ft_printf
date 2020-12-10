@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_elem_buffer.c                                   :+:      :+:    :+:   */
+/*   ft_elem_prec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/07 15:04:32 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/07 18:21:09 by agiraude         ###   ########.fr       */
+/*   Created: 2020/12/10 14:06:48 by agiraude          #+#    #+#             */
+/*   Updated: 2020/12/10 16:35:12 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*elem_fill_str_prec(t_elem *e)
+char	*elem_prec_str(t_elem *e)
 {
 	char	*ret;
 	char	*src;
 	int		i;
 	int		datalen;
 
+	e->pad = ' ';
 	src = e->data;
 	datalen = ft_strlen(src);
 	if (e->prec && e->size < datalen)
@@ -33,7 +34,13 @@ char	*elem_fill_str_prec(t_elem *e)
 	return (ret);
 }
 
-char	*elem_fill_nbr_prec(t_elem *e)
+char	*elem_prec_chr(t_elem *e)
+{
+	e->pad = ' ';
+	return (ft_strdup(e->data));
+}
+
+char	*elem_prec_nbr(t_elem *e)
 {
 	char	*ret;
 	char	*src;
@@ -62,66 +69,48 @@ char	*elem_fill_nbr_prec(t_elem *e)
 	return (ret);
 }
 
-char	*elem_fill_prec(t_elem *e)
-{
-	char	*prec;
-
-	if (ft_strchr("pdiuxX", e->type))
-		prec = elem_fill_nbr_prec(e);
-	else
-	{
-		e->pad = ' ';
-		prec = elem_fill_str_prec(e);
-	}
-	return (prec);
-}
-
-char	*elem_fill_align(t_elem *e, char *prec)
+char	*elem_prec_ptr(t_elem *e)
 {
 	char	*ret;
+	char	*src;
+	int		i;
 	int		datalen;
 	int		padlen;
-	int		i;
-	int		j;
 
-	datalen = ft_strlen(prec);
-	padlen = 0;
-	if (e->prec)
+	src = e->data;
+	if (ft_strchr(src, '('))
+	{
 		e->pad = ' ';
-	if (e->width > datalen)
-		padlen = e->width - datalen;
-	ret = (char*)malloc(sizeof(char) * (datalen + padlen + 1));
+		return (ft_strdup(src));
+	}
+	datalen = ft_strlen(src);
+	padlen = 0;
+	if (e->prec && e->size > datalen)
+		padlen = e->size - datalen;
+	ret = (char*)malloc(sizeof(char) * (datalen + padlen + 3));
 	if (!ret)
 		return (0);
-	i = 0;
-	if (ft_atoi(prec) < 0 && e->prec)
-		e->pad = ' ';
-	if (e->align == RIGHT)
-		while (i < padlen)
-			ret[i++] = e->pad;
-	j = 0;
-	while (j < datalen)
-		ret[i++] = prec[j++];
-	while (i < padlen + datalen)
-		ret[i++] = ' ';
+	ret[0] = '0';
+	ret[1] = 'x';
+	i = 2;
+	while (i < padlen + 2)
+		ret[i++] = '0';
+	while (i < datalen + padlen + 2)
+		ret[i++] = *src++;
 	ret[i] = '\0';
-	fix_minus(ret);
-	if (!ft_strchr(ret, '('))
-		fix_hex(e, &ret);
-	free(prec);
 	return (ret);
 }
 
-char	*elem_fill_buffer(t_elem *e)
+char	*elem_prec(t_elem *e)
 {
-	char	*prec;
-	char	*buffer;
-
-	if (e->type == '%')
-		return (ft_strdup("%"));
-	prec = elem_fill_prec(e);
-	if (!prec)
+	if (ft_strchr("diuxX", e->type))
+		return (elem_prec_nbr(e));
+	else if (e->type == 'p')
+		return (elem_prec_ptr(e));
+	else if (e->type == 's')
+		return (elem_prec_str(e));
+	else if (e->type == 'c')
+		return (elem_prec_chr(e));
+	else
 		return (0);
-	buffer = elem_fill_align(e, prec);
-	return (buffer);
 }

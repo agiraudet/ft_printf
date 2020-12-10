@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_elem_align.c                                    :+:      :+:    :+:   */
+/*   ft_align.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:10:36 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 14:32:39 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:04:54 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*elem_align(t_elem *e, char *prec)
+char	*ft_align(t_elem *e, char *prec)
 {
 	char	*ret;
 	int		datalen;
@@ -48,16 +48,16 @@ char	*elem_align(t_elem *e, char *prec)
 	return (ret);
 }
 
-char	*elem_fill_buffer(t_elem *e)
+char	*ft_fill_buffer(t_elem *e)
 {
 	char	*prec;
 	char	*buffer;
 
 	if (e->type == '%')
 		return (ft_strdup("%"));
-	prec = elem_prec(e);
+	prec = ft_prec(e);
 	if (!prec)
 		return (0);
-	buffer = elem_align(e, prec);
+	buffer = ft_align(e, prec);
 	return (buffer);
 }

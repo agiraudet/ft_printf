@@ -6,7 +6,7 @@
 #    By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/04 10:43:09 by agiraude          #+#    #+#              #
-#    Updated: 2020/12/10 14:28:38 by agiraude         ###   ########.fr        #
+#    Updated: 2020/12/10 17:00:19 by agiraude         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ INC_DIR		=	includes/
 
 SRCS_DIR	=	srcs/
 
-SRCS_FILES	=	ft_elem_align.c \
+SRCS_FILES	=	ft_align.c \
 				ft_elem_manage.c \
-				ft_elem_prec.c \
-				ft_elem_set.c \
-				ft_elem_utils.c \
+				ft_prec.c \
+				ft_set.c \
+				ft_utils.c \
 				ft_printf.c	
 
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_FILES))

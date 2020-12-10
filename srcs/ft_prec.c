@@ -6,13 +6,13 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:06:48 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 16:35:12 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:59:00 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*elem_prec_str(t_elem *e)
+char	*ft_prec_str(t_elem *e)
 {
 	char	*ret;
 	char	*src;
@@ -34,13 +34,13 @@ char	*elem_prec_str(t_elem *e)
 	return (ret);
 }
 
-char	*elem_prec_chr(t_elem *e)
+char	*ft_prec_chr(t_elem *e)
 {
 	e->pad = ' ';
 	return (ft_strdup(e->data));
 }
 
-char	*elem_prec_nbr(t_elem *e)
+char	*ft_prec_nbr(t_elem *e)
 {
 	char	*ret;
 	char	*src;
@@ -54,7 +54,7 @@ char	*elem_prec_nbr(t_elem *e)
 	if (e->prec && !e->size && *src == '0' && datalen == 1)
 		return (ft_strdup(""));
 	if (e->prec && e->size > datalen)
-		padlen = e->size -datalen;
+		padlen = e->size - datalen;
 	padlen += (ft_strchr(src, '-') && e->prec && e->size >= datalen) ? 1 : 0;
 	ret = (char*)malloc(sizeof(char) * (datalen + padlen + 1));
 	if (!ret)
@@ -69,7 +69,7 @@ char	*elem_prec_nbr(t_elem *e)
 	return (ret);
 }
 
-char	*elem_prec_ptr(t_elem *e)
+char	*ft_prec_ptr(t_elem *e)
 {
 	char	*ret;
 	char	*src;
@@ -101,16 +101,16 @@ char	*elem_prec_ptr(t_elem *e)
 	return (ret);
 }
 
-char	*elem_prec(t_elem *e)
+char	*ft_prec(t_elem *e)
 {
 	if (ft_strchr("diuxX", e->type))
-		return (elem_prec_nbr(e));
+		return (ft_prec_nbr(e));
 	else if (e->type == 'p')
-		return (elem_prec_ptr(e));
+		return (ft_prec_ptr(e));
 	else if (e->type == 's')
-		return (elem_prec_str(e));
+		return (ft_prec_str(e));
 	else if (e->type == 'c')
-		return (elem_prec_chr(e));
+		return (ft_prec_chr(e));
 	else
 		return (0);
 }

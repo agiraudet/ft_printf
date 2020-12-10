@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 12:15:32 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/08 18:49:14 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:20:08 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
 t_list				*ft_lstpop_front(t_list **lst);
 t_list				*ft_lstpop_back(t_list **lst);
-t_list				*ft_lstpop_srch(t_list **lst, int (*f)(void *, void *), void *data);
+t_list				*ft_lstpop_srch(t_list **lst,
+									int (*f)(void *, void *), void *data);
 void				ft_lstswap(t_list *prev, t_list *a);
 
 #endif

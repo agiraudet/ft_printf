@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_elem_utils.c                                    :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 17:42:31 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 13:44:06 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:13:25 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,8 @@ char	*arg_to_str(t_elem *e, char *arg)
 
 char	*arg_to_ptr(long ptr)
 {
-	char	*hex;
-	char	*ret;
-
 	if (!ptr)
 		return (ft_strdup("(nil)"));
-	hex = ft_itoa_base(ptr, "0123456789abcdef");
-	ret = ft_strjoin("0x", hex);
-	(void)ret;
-	/*
-	free(hex);
-	return (ret);
-	*/
 	return (ft_itoa_base(ptr, "0123456789abcdef"));
 }
 
@@ -57,13 +47,11 @@ char	*fix_hex(char *src)
 	return (src);
 }
 
-
 void	fix_minus(char *src)
 {
 	int		i;
 
 	i = 0;
-
 	while (src[i] == '0')
 		i++;
 	if (src[i] == '-')
@@ -73,17 +61,17 @@ void	fix_minus(char *src)
 	}
 }
 
-void	elem_put_buffer(t_elem *e, char	*buffer)
+void	put_buffer(t_elem *e, char *buffer)
 {
 	int		i;
 
 	i = 0;
 	while (buffer[i])
 	{
-		if (e->zeroFlag && buffer[i] == '.')
+		if (e->zero_flag && buffer[i] == '.')
 			ft_putchar(0);
 		else
-		ft_putchar(buffer[i]);
+			ft_putchar(buffer[i]);
 		i++;
 	}
 }

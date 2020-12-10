@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 14:30:33 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/06 17:25:22 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:18:20 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t	ft_strlen(const char *s)
 {
 	size_t i;
-	
+
 	if (!s)
 		return (0);
 	i = 0;

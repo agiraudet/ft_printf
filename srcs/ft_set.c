@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 14:36:18 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 17:16:04 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:52:11 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,8 @@ void		ft_set_prec(const char **str, t_elem *e, va_list *param)
 
 void		ft_set_data(t_elem *e, va_list *param)
 {
-	long	x;
-
 	if (e->type == 'c')
-	{
-		x = (int)va_arg(*param, int);
-		if (x >= 2147483647)
-			x = 255;
-		else if (x <= -2147483648)
-			x = 0;
-		if (x == 0)
-		{
-			e->zero_flag = 1;
-			x = '.';
-		}
-		e->data = ft_ctostr(x);
-	}
+		e->data = arg_to_chr(e, (int)va_arg(*param, int));
 	else if (e->type == 's')
 		e->data = arg_to_str(e, ft_strdup((char*)va_arg(*param, char*)));
 	else if (e->type == 'p')

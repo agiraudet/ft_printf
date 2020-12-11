@@ -6,32 +6,22 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:10:36 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 17:04:54 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:40:57 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*ft_align(t_elem *e, char *prec)
+char	*ft_put_align(t_elem *e, char *prec, int datalen, int padlen)
 {
 	char	*ret;
-	int		datalen;
-	int		padlen;
 	int		i;
 	int		j;
 
-	datalen = ft_strlen(prec);
-	padlen = 0;
-	if (e->prec)
-		e->pad = ' ';
-	if (e->width > datalen)
-		padlen = e->width - datalen;
 	ret = (char*)malloc(sizeof(char) * (datalen + padlen + 1));
 	if (!ret)
 		return (0);
 	i = 0;
-	if (ft_atoi(prec) < 0 && e->prec)
-		e->pad = ' ';
 	if (e->align == RIGHT)
 		while (i < padlen)
 			ret[i++] = e->pad;
@@ -41,6 +31,26 @@ char	*ft_align(t_elem *e, char *prec)
 	while (i < padlen + datalen)
 		ret[i++] = ' ';
 	ret[i] = '\0';
+	return (ret);
+}
+
+char	*ft_align(t_elem *e, char *prec)
+{
+	char	*ret;
+	int		datalen;
+	int		padlen;
+
+	datalen = ft_strlen(prec);
+	padlen = 0;
+	if (e->prec || (e->type == 'p' && ft_strchr(prec, '(')))
+		e->pad = ' ';
+	if (e->width > datalen)
+		padlen = e->width - datalen;
+	if (ft_atoi(prec) < 0 && e->prec)
+		e->pad = ' ';
+	ret = ft_put_align(e, prec, datalen, padlen);
+	if (!ret)
+		return (0);
 	fix_minus(ret);
 	if (e->type == 'p')
 		fix_hex(ret);

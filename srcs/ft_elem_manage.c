@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:02:06 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 17:12:29 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:50:11 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,21 @@ t_elem	*elem_create(const char **str, va_list *param)
 	(*str)++;
 	ft_set_data(e, param);
 	return (e);
+}
+
+void	put_buffer(t_elem *e, char *buffer)
+{
+	int		i;
+
+	i = 0;
+	while (buffer[i])
+	{
+		if (e->zero_flag && buffer[i] == '.')
+			ft_putchar(0);
+		else
+			ft_putchar(buffer[i]);
+		i++;
+	}
 }
 
 int		elem_print(const char **str, va_list *param)

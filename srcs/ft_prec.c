@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_elem_prec.c                                     :+:      :+:    :+:   */
+/*   ft_prec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:06:48 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 16:59:00 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:41:35 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,12 @@ char	*ft_prec_ptr(t_elem *e)
 
 	src = e->data;
 	if (ft_strchr(src, '('))
-	{
-		e->pad = ' ';
 		return (ft_strdup(src));
-	}
 	datalen = ft_strlen(src);
 	padlen = 0;
 	if (e->prec && e->size > datalen)
 		padlen = e->size - datalen;
-	ret = (char*)malloc(sizeof(char) * (datalen + padlen + 3));
-	if (!ret)
+	if (!(ret = (char*)malloc(sizeof(char) * (datalen + padlen + 3))))
 		return (0);
 	ret[0] = '0';
 	ret[1] = 'x';

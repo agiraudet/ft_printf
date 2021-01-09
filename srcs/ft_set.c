@@ -6,11 +6,19 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 14:36:18 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 19:52:11 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/01/07 17:09:24 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+int			ft_set_padlen(t_elem *e, int datalen)
+{
+	if (e->prec && e->size > datalen)
+		return (e->size - datalen);
+	else
+		return (0);
+}
 
 void		ft_set_value(t_elem *e, int *val, const char **str, va_list *param)
 {
@@ -69,22 +77,28 @@ void		ft_set_prec(const char **str, t_elem *e, va_list *param)
 	}
 }
 
-void		ft_set_data(t_elem *e, va_list *param)
+int			ft_set_data(t_elem *e, va_list *param)
 {
 	if (e->type == 'c')
-		e->data = arg_to_chr(e, (int)va_arg(*param, int));
+		e->data = arg_to_chr(e, (wchar_t)va_arg(*param, wchar_t));
 	else if (e->type == 's')
-		e->data = arg_to_str(e, ft_strdup((char*)va_arg(*param, char*)));
+		e->data = arg_to_str(ft_strdup((char*)va_arg(*param, char*)));
 	else if (e->type == 'p')
-		e->data = arg_to_ptr((long)va_arg(*param, long));
+		e->data = arg_to_ptr(
+				(unsigned long long)va_arg(*param, unsigned long long));
 	else if (e->type == 'd' || e->type == 'i')
 		e->data = ft_itoa((int)va_arg(*param, int));
 	else if (e->type == 'u')
 		e->data = ft_utoa((unsigned int)va_arg(*param, unsigned int));
 	else if (e->type == 'x')
-		e->data = ft_itoa_base((long)va_arg(*param, long), "0123456789abcdef");
+		e->data = ft_itoa_base(
+				(unsigned int)va_arg(*param, unsigned int), "0123456789abcdef");
 	else if (e->type == 'X')
-		e->data = ft_itoa_base((long)va_arg(*param, long), "0123456789ABCDEF");
+		e->data = ft_itoa_base(
+				(unsigned int)va_arg(*param, unsigned int), "0123456789ABCDEF");
 	else if (e->type == '%')
 		e->data = ft_strdup("%");
+	if (!e->data)
+		return (0);
+	return (1);
 }

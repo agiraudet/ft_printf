@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:02:06 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 19:50:11 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/01/07 17:08:40 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ t_elem	*elem_create(const char **str, va_list *param)
 	}
 	e->type = **str;
 	(*str)++;
-	ft_set_data(e, param);
+	if (!ft_set_data(e, param))
+	{
+		free(e);
+		return (0);
+	}
 	return (e);
 }
 
@@ -55,11 +59,17 @@ void	put_buffer(t_elem *e, char *buffer)
 	while (buffer[i])
 	{
 		if (e->zero_flag && buffer[i] == '.')
-			ft_putchar(0);
+			write(1, &e->wchar, 1);
 		else
 			ft_putchar(buffer[i]);
 		i++;
 	}
+}
+
+void	elem_destroy(t_elem *e)
+{
+	free(e->data);
+	free(e);
 }
 
 int		elem_print(const char **str, va_list *param)
@@ -68,10 +78,15 @@ int		elem_print(const char **str, va_list *param)
 	char	*buffer;
 	t_elem	*e;
 
-	e = elem_create(str, param);
-	buffer = ft_fill_buffer(e);
+	if (!(e = elem_create(str, param)))
+		return (-1);
+	if (!(buffer = ft_fill_buffer(e)))
+	{
+		elem_destroy(e);
+		return (-1);
+	}
 	ret = ft_strlen(buffer);
-	if (e->error_flag)
+	if (e->error_flag == 1)
 	{
 		free(buffer);
 		buffer = ft_strdup("");
@@ -79,7 +94,6 @@ int		elem_print(const char **str, va_list *param)
 	}
 	put_buffer(e, buffer);
 	free(buffer);
-	free(e->data);
-	free(e);
+	elem_destroy(e);
 	return (ret);
 }

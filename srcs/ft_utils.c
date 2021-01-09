@@ -6,39 +6,34 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 17:42:31 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 19:53:23 by agiraude         ###   ########.fr       */
+/*   Updated: 2021/01/07 17:10:03 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*arg_to_str(t_elem *e, char *arg)
+char	*arg_to_str(char *arg)
 {
 	if (!arg)
 	{
-		if (e->prec && e->size <= 5)
-			return (ft_strdup(""));
 		return (ft_strdup("(null)"));
 	}
 	return (arg);
 }
 
-char	*arg_to_ptr(long ptr)
+char	*arg_to_ptr(unsigned long long ptr)
 {
 	if (!ptr)
-		return (ft_strdup("(nil)"));
+		return (ft_strdup("0"));
 	return (ft_itoa_base(ptr, "0123456789abcdef"));
 }
 
-char	*arg_to_chr(t_elem *e, long x)
+char	*arg_to_chr(t_elem *e, wchar_t x)
 {
-	if (x >= 2147483647)
-		x = 255;
-	else if (x <= -2147483648)
-		x = 0;
-	if (x == 0)
+	if (x == 0 || x > 255)
 	{
 		e->zero_flag = 1;
+		e->wchar = x;
 		x = '.';
 	}
 	return (ft_ctostr(x));

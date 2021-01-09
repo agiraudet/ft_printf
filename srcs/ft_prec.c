@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:06:48 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 19:41:35 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/19 14:31:11 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ char	*ft_prec_ptr(t_elem *e)
 	if (ft_strchr(src, '('))
 		return (ft_strdup(src));
 	datalen = ft_strlen(src);
-	padlen = 0;
-	if (e->prec && e->size > datalen)
-		padlen = e->size - datalen;
+	if (e->prec && e->size == 0 && e->data[0] == '0')
+		return (ft_strdup("0x"));
+	padlen = ft_set_padlen(e, datalen);
 	if (!(ret = (char*)malloc(sizeof(char) * (datalen + padlen + 3))))
 		return (0);
 	ret[0] = '0';

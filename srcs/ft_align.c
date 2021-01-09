@@ -6,7 +6,7 @@
 /*   By: agiraude <agiraude@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:10:36 by agiraude          #+#    #+#             */
-/*   Updated: 2020/12/10 19:40:57 by agiraude         ###   ########.fr       */
+/*   Updated: 2020/12/19 14:28:51 by agiraude         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ char	*ft_align(t_elem *e, char *prec)
 	if (ft_atoi(prec) < 0 && e->prec)
 		e->pad = ' ';
 	ret = ft_put_align(e, prec, datalen, padlen);
+	free(prec);
 	if (!ret)
 		return (0);
 	fix_minus(ret);
 	if (e->type == 'p')
 		fix_hex(ret);
-	free(prec);
 	return (ret);
 }
 
@@ -64,7 +64,10 @@ char	*ft_fill_buffer(t_elem *e)
 	char	*buffer;
 
 	if (e->type == '%')
-		return (ft_strdup("%"));
+	{
+		e->type = 'i';
+		e->prec = 0;
+	}
 	prec = ft_prec(e);
 	if (!prec)
 		return (0);
